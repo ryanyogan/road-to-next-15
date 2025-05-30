@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { toast } from "sonner";
 
 export function RedirectToast() {
+  //TODO: Remove this when template.tsx issue is fixed
   const pathname = usePathname();
 
   useEffect(() => {
