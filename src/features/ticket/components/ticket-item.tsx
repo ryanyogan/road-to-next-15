@@ -71,10 +71,9 @@ export function TicketItem({ ticket, isDetail }: TicketItemProps) {
             {ticket.content}
           </span>
         </CardContent>
-        <CardFooter>
-          <Link href={ticketPath(ticket.id)} className="text-sm underline">
-            View
-          </Link>
+        <CardFooter className="flex justify-between">
+          <p className="text-sm text-muted-foreground">{ticket.deadline}</p>
+          <p className="text-sm text-muted-foreground">{ticket.bounty}</p>
         </CardFooter>
       </Card>
 
