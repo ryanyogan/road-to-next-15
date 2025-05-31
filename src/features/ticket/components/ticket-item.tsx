@@ -12,12 +12,12 @@ import { ticketEditPath, ticketPath } from "@/paths";
 import { toCurrencyFromCents } from "@/utils/currency";
 import {
   LucideArrowUpRightFromSquare,
+  LucideMoreVertical,
   LucidePencil,
-  LucideTrash,
 } from "lucide-react";
 import Link from "next/link";
-import { deleteTicket } from "../actions/delete-ticket";
 import { TICKET_ICONS } from "../constants";
+import { TicketMoreMenu } from "./ticket-more-menu";
 
 type TicketItemProps = {
   ticket: Ticket;
@@ -33,20 +33,23 @@ export function TicketItem({ ticket, isDetail }: TicketItemProps) {
     </Button>
   );
 
-  const deleteButton = (
-    <form action={deleteTicket.bind(null, ticket.id)}>
-      <Button variant="outline" size="icon">
-        <LucideTrash className="size-4" />
-      </Button>
-    </form>
-  );
-
   const editButton = (
     <Button variant="outline" size="icon" asChild>
       <Link prefetch href={ticketEditPath(ticket.id)}>
         <LucidePencil className="size-4" />
       </Link>
     </Button>
+  );
+
+  const moreMenu = (
+    <TicketMoreMenu
+      ticket={ticket}
+      trigger={
+        <Button variant="outline" size="icon">
+          <LucideMoreVertical className="size-4" />
+        </Button>
+      }
+    />
   );
 
   return (
@@ -84,7 +87,7 @@ export function TicketItem({ ticket, isDetail }: TicketItemProps) {
         {isDetail ? (
           <>
             {editButton}
-            {deleteButton}
+            {moreMenu}
           </>
         ) : (
           <>
