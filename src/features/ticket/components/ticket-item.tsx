@@ -9,6 +9,7 @@ import {
 import { Ticket } from "@/generated/prisma";
 import { cn } from "@/lib/utils";
 import { ticketEditPath, ticketPath } from "@/paths";
+import { toCurrencyFromCents } from "@/utils/currency";
 import {
   LucideArrowUpRightFromSquare,
   LucidePencil,
@@ -73,7 +74,9 @@ export function TicketItem({ ticket, isDetail }: TicketItemProps) {
         </CardContent>
         <CardFooter className="flex justify-between">
           <p className="text-sm text-muted-foreground">{ticket.deadline}</p>
-          <p className="text-sm text-muted-foreground">{ticket.bounty}</p>
+          <p className="text-sm text-muted-foreground">
+            {toCurrencyFromCents(ticket.bounty)}
+          </p>
         </CardFooter>
       </Card>
 

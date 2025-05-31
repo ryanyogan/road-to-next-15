@@ -1,5 +1,6 @@
 "use client";
 
+import { DatePicker } from "@/components/date-picker";
 import { FieldError } from "@/components/form/field-error";
 import { Form } from "@/components/form/form";
 import { SubmitButton } from "@/components/form/submit-button";
@@ -8,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Ticket } from "@/generated/prisma";
+import { fromCent } from "@/utils/currency";
 import { useActionState } from "react";
 import { upsertTicket } from "../actions/upsert-ticket";
 
@@ -47,10 +49,9 @@ export function TicketUpsertForm({ ticket }: TicketUpsertFormProps) {
       <div className="flex gap-x-2 mb-1">
         <div className="w-1/2 gap-y-2 flex flex-col">
           <Label htmlFor="deadline">Deadline</Label>
-          <Input
+          <DatePicker
             id="deadline"
             name="deadline"
-            type="date"
             defaultValue={
               (actionState.payload?.get("deadline") as string) ??
               ticket?.deadline
@@ -67,7 +68,8 @@ export function TicketUpsertForm({ ticket }: TicketUpsertFormProps) {
             type="number"
             step="0.01"
             defaultValue={
-              (actionState.payload?.get("bounty") as string) ?? ticket?.bounty
+              (actionState.payload?.get("bounty") as string) ??
+              (ticket?.bounty ? fromCent(ticket.bounty) : "")
             }
           />
           <FieldError actionState={actionState} name="bounty" />
