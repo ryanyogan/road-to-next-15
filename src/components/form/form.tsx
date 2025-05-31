@@ -6,17 +6,33 @@ type FormProps = {
   action: (payload: FormData) => void;
   actionState: ActionState;
   children: React.ReactNode;
+  onSuccess?: (actionState: ActionState) => void;
+  onError?: (actionState: ActionState) => void;
 };
 
-export function Form({ action, actionState, children }: FormProps) {
+export function Form({
+  action,
+  actionState,
+  children,
+  onError,
+  onSuccess,
+}: FormProps) {
   useActionFeedback(actionState, {
     onSuccess: ({ actionState }) => {
-      toast.success(actionState.message || "Ticket saved successfully!");
+      if (actionState.message) {
+        toast.success(actionState.message || "Ticket saved successfully!");
+      }
+
+      onSuccess?.(actionState);
     },
     onError: ({ actionState }) => {
-      toast.error(
-        actionState.message || "An error occurred while saving the ticket."
-      );
+      if (actionState.message) {
+        toast.error(
+          actionState.message || "An error occurred while saving the ticket."
+        );
+      }
+
+      onError?.(actionState);
     },
   });
 
